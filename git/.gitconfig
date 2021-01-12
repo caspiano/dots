@@ -1,0 +1,36 @@
+[credential]
+    helper = store
+[user]
+    email = caspianbaska@gmail.com
+    name = Caspian Baska
+[alias]
+    a      = add
+    amd    = commit --amend
+    aamd   = commit --amend -a
+    log    = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    s      = status -sb
+    b      = branch
+    bv     = branch -v
+    cam    = commit -am
+    cm     = commit -m
+    cob    = checkout -b
+    co     = checkout
+    h      = hist
+    hist   = log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'
+    shit   = hist
+    tug    = pull
+    thanks = blame
+    dh     = diff HEAD
+    dc     = diff --cached
+    d      = diff
+[color "diff"]
+    meta   = 15
+    commit = 83
+    frag   = 4
+    old    = 160
+    new    = 83
+    whitespace = 160 reverse
+[core]
+    excludesFile = ~/.gitignore
+[url "git@github.com:"]
+    insteadOf = https://github.com/
