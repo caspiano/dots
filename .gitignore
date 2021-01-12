@@ -1,3 +1,4 @@
 nvim/.config/nvim/plugs
 nvim/.config/nvim/undo
+zsh/.oh-my-zsh
 tmux/.tmux/plugins
