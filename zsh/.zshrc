@@ -113,7 +113,7 @@ alias v='nvim'
 alias vo='nvim'
 alias vu='nvim'
 
-alias ts='git tag v$(shards version)'
+alias gts='git tag v$(shards version)'
 alias gpat='git push --tags'
 
 alias pwdc='echo "$(pwd)" | tee "$(tty)" | pbcopy'
