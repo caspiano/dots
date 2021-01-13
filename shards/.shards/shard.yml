@@ -1,0 +1,10 @@
+name: shards
+version: 0.0.0
+
+targets:
+  ameba:
+    main: lib/ameba/src/cli.cr
+
+dependencies:
+  ameba:
+    github: crystal-ameba/ameba
