@@ -142,7 +142,7 @@ alias sharts='shards'
 
 alias rg='rg --color=always'
 
-alias cp='cp -r'
+alias cp='cp -R'
 alias m='mv'
 alias mkdir='mkdir -p'
 alias sl='ls'
