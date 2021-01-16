@@ -274,10 +274,9 @@ function y() {
     fi
 }
 
-# ACA related
+# PlaceOS related
 ################################################
 export SG_ENV="development"
-export DEV="$HOME/Development/Work/dev"
 ################################################
 
 # Language configurations
@@ -289,20 +288,20 @@ export GOPATH="$HOME/.go"
 
 export CRYSTAL_WORKERS=4
 
-# Added by nvm
+# Environments
+################################################
+
+# Node Version Manager
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-
 # Ruby
 [ -d $HOME/.rbenv ] && eval "$(rbenv init -)"
 # Rust
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
-# Added by travis gem
-[ -f $HOME/.travis/travis.sh ] && $HOME/.travis/travis.sh
-# Added by Nix installer
+# Nix
 [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ] && . $HOME/.nix-profile/etc/profile.d/nix.sh
-# Added by ghcup
+# ghcup
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry
 [ -f $HOME/.poetry/env ] && . $HOME/.poetry/env 
