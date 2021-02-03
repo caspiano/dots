@@ -154,7 +154,8 @@ alias s=scratch
 alias scratch='nvim ~/.scratch.md'
 alias chinese='nvim ~/.chinese.md'
 alias work='nvim ~/.work.md'
-alias pers='nvim ~/.personal.md' alias tasks='taskell ~/.taskell.md'
+alias pers='nvim ~/.personal.md'
+alias tasks='taskell ~/.taskell.md'
 
 alias dev_box='ssh -L 127.0.0.1:8080:localhost:8080 dev_box'
 
