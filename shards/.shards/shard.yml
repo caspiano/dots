@@ -4,7 +4,11 @@ version: 0.0.0
 targets:
   ameba:
     main: lib/ameba/src/cli.cr
+  shards:
+    main: lib/shards/src/shards.cr
 
 dependencies:
   ameba:
     github: crystal-ameba/ameba
+  shards:
+    github: crystal-lang/shards

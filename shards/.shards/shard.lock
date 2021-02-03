@@ -2,5 +2,13 @@ version: 2.0
 shards:
   ameba:
     git: https://github.com/crystal-ameba/ameba.git
-    version: 0.13.3
+    version: 0.13.4
+
+  molinillo:
+    git: https://github.com/crystal-lang/crystal-molinillo.git
+    version: 0.1.0
+
+  shards:
+    git: https://github.com/crystal-lang/shards.git
+    version: 0.13.0
 
