@@ -88,8 +88,6 @@ alias vimrc="vim ~/.vimrc"
 # Aliases
 #################################
 
-alias config='$(which git) --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
 alias py='python3'
 alias pip='pip3'
 alias ra='ranger'
@@ -113,18 +111,19 @@ alias v='nvim'
 alias vo='nvim'
 alias vu='nvim'
 
-alias gts='git tag v$(shards version)'
-alias gpat='git push --tags'
-
 alias pwdc='echo "$(pwd)" | tee "$(tty)" | pbcopy'
 
 alias we='watch-exec'
 
 alias cz='git cz'
 alias g='git'
-alias gs='git s'
 alias gap='git add --patch'
 alias gdc='git dc'
+alias git-branch-clean='git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
+alias gpat='git push --tags'
+alias gs='git s'
+
+alias gts='git tag v$(shards version)'
 
 alias ldo='lazydocker'
 alias d='docker'
