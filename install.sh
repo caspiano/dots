@@ -9,7 +9,7 @@ function run_stow() {
 
   echo "running stow"
   # Stow everything except install script
-  stow *[^.sh]
+  stow --target=${HOME} *[^.sh]
 }
 
 
