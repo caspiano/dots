@@ -1,8 +1,10 @@
+[fetch]
+    prune  = true
 [credential]
     helper = store
 [user]
-    email = caspianbaska@gmail.com
-    name = Caspian Baska
+    email  = caspianbaska@gmail.com
+    name   = Caspian Baska
 [alias]
     a      = add
     amd    = commit --amend
@@ -35,4 +37,4 @@
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [init]
-	defaultBranch = main
+    defaultBranch = main
