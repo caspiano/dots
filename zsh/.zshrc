@@ -18,6 +18,7 @@ ZSH_DISABLE_COMPFIX="true"
 PLATTY=$(uname -s)
 
 plugins=(
+  asdf
   autojump
   cargo
   compleat

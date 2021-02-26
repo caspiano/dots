@@ -50,5 +50,6 @@ linux() {
   fi
 }
 
+[[ -f ${HOME}/.asdf ]] && git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 run_stow
 yes | KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
