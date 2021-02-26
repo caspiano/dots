@@ -119,7 +119,7 @@ alias cz='git cz'
 alias g='git'
 alias gap='git add --patch'
 alias gdc='git dc'
-alias git-branch-clean='git fetch && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
+alias git-branch-clean='git fetch && git co master && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
 alias gpat='git push --tags'
 alias gs='git s'
 
