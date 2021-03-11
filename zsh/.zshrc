@@ -296,10 +296,13 @@ export CRYSTAL_WORKERS=4
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+
+# asdf
+[ -d $HOME/.asdf ] && . $HOME/.asdf/asdf.sh
 # Ruby
 [ -d $HOME/.rbenv ] && eval "$(rbenv init -)"
 # Rust
-[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
+[ -f $HOME/.cargo/env ] && . $HOME/.cargo/env
 # Nix
 [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ] && . $HOME/.nix-profile/etc/profile.d/nix.sh
 # ghcup
