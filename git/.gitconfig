@@ -38,3 +38,7 @@
     insteadOf = https://github.com/
 [init]
     defaultBranch = main
+[pull]
+    rebase = false
+[advice]
+    addIgnoredFile = false
