@@ -10,6 +10,8 @@ function run_stow() {
   echo "running stow"
   # Stow everything except install script
   stow --target=${HOME} *[^.sh]
+
+  defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 }
 
 
