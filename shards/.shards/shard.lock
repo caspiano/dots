@@ -10,5 +10,5 @@ shards:
 
   shards:
     git: https://github.com/crystal-lang/shards.git
-    version: 0.14.0
+    version: 0.14.1
 
