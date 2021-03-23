@@ -97,6 +97,7 @@ alias fhs='fast-http-server'
 
 alias c='clear'
 
+alias cs='crystal spec'
 alias cf='crystal tool format'
 alias cfa='crystal tool format && ameba'
 
