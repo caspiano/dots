@@ -4,6 +4,8 @@
 
 set -euo pipefail
 
+mkidr ${HOME}/.local/bin
+
 function run_stow() {
   check_stow_install
 
@@ -34,12 +36,13 @@ mac() {
   fi
 
   brew install stow
+  bash update_crystalline_osx.sh
 }
 
 linux() {
   if command -v 'yay' &> /dev/null; then
     # Arch
-    yay -S stow
+    yay -S stow crystalline
   elif command -v 'apt' &> /dev/null; then
     # Debian based
     apt install stow
