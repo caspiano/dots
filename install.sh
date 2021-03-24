@@ -14,15 +14,14 @@ function run_stow() {
   defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 }
 
-
 # Check for a stow install, installs if not present
 check_stow_install() {
   if ! command -v 'stow' &> /dev/null; then
     echo "no stow install found, attempting to install"
     if [[ "$(uname -s)" -eq 'Darwin' ]]; then
-    mac
+      mac
     else
-    linux
+      linux
     fi
   fi
   return
@@ -30,9 +29,10 @@ check_stow_install() {
 
 mac() {
   if ! command -v 'brew' &> /dev/null; then
-      echo 'No brew - install it: https://brew.sh/'
-      exit 1
+    echo 'No brew - install it: https://brew.sh/'
+    exit 1
   fi
+
   brew install stow
 }
 
