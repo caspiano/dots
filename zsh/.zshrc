@@ -18,17 +18,17 @@ ZSH_DISABLE_COMPFIX="true"
 PLATTY=$(uname -s)
 
 plugins=(
-  asdf
-  autojump
-  cargo
-  compleat
-  dircycle
-  docker
-  docker-compose
-  fzf
-  git
-  nmap
-  npm
+  asdf           # Generic language version manager
+  autojump       # Memorise visited directories
+  cargo          # Rust dep manager
+  compleat       # Completion and correction
+  dircycle       # Reference dirs in your nav stack
+  docker         # Duh
+  docker-compose # Duh
+  fzf            # Fuzzy phinder
+  git            # Duh
+  nmap           # _The_ nmap
+  npm            # Node dep manager
 )
 
 if [[ "$PLATTY" -eq "Darwin" ]]
@@ -227,7 +227,7 @@ then
   }
 
   function positivebeep() {
-      (say "done")
+      (say --voice Ting-Ting "完了")
   }
 else
   # Create linux only aliases
@@ -290,6 +290,8 @@ export GOPATH="$HOME/.go"
 
 export CRYSTAL_WORKERS=4
 
+export SHARDS_OPTS="--ignore-crystal-version"
+
 # Environments
 ################################################
 
@@ -312,3 +314,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -f $HOME/.poetry/env ] && . $HOME/.poetry/env 
 # broot
 [ -f $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br ] && . $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br 
+
+export PATH="$HOME/.poetry/bin:$PATH"
