@@ -1,0 +1,8 @@
+font-fira-code
+gswitch
+hammerspoon
+mark-text
+meetingbar
+ngrok
+optimage
+vscodium
