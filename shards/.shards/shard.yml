@@ -4,11 +4,20 @@ version: 0.0.0
 targets:
   ameba:
     main: lib/ameba/src/cli.cr
+  crystalline:
+    main: lib/crystalline/src/crystalline.cr
+  scry:
+    main: lib/scry/src/scry.cr
   shards:
     main: lib/shards/src/shards.cr
 
 dependencies:
   ameba:
     github: crystal-ameba/ameba
+  crystalline:
+    github: elbywan/crystalline
+    branch: master
+  scry:
+    github: crystal-lang-tools/scry
   shards:
     github: crystal-lang/shards

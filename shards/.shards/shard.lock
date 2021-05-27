@@ -4,11 +4,39 @@ shards:
     git: https://github.com/crystal-ameba/ameba.git
     version: 0.14.3
 
+  bisect:
+    git: https://github.com/spider-gazelle/bisect.git
+    version: 1.2.1
+
+  crystalline:
+    git: https://github.com/elbywan/crystalline.git
+    version: 0.3.0+git.commit.1b66bdae3f9f5ef69f537e33d18287d433783ee3
+
+  json_mapping:
+    git: https://github.com/crystal-lang/json_mapping.cr.git
+    version: 0.1.1
+
+  lsp:
+    git: https://github.com/crystal-lang-tools/lsp.git
+    version: 0.2.0
+
   molinillo:
     git: https://github.com/crystal-lang/crystal-molinillo.git
     version: 0.2.0
 
+  priority-queue:
+    git: https://github.com/spider-gazelle/priority-queue.git
+    version: 1.0.1
+
+  scry:
+    git: https://github.com/crystal-lang-tools/scry.git
+    version: 0.9.1
+
   shards:
     git: https://github.com/crystal-lang/shards.git
     version: 0.14.1
+
+  version_from_shard:
+    git: https://github.com/hugopl/version_from_shard.git
+    version: 1.2.4
 
