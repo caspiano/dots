@@ -93,6 +93,8 @@ alias vimrc="vim ~/.vimrc"
 # Aliases
 #################################
 
+alias code='codium'
+
 alias py='python3'
 alias pip='pip3'
 alias ra='ranger'
@@ -170,6 +172,7 @@ function mac_aliases() {
   alias la='ls -lAh'
   alias ls='ls -Gh'
   alias lsa='ls -lah'
+  alias xdg-open='open'
 }
 
 function linux_aliases() {
@@ -217,6 +220,9 @@ then
   export CPPFlAGS="-L/usr/local/opt/openssl/include"
   export LDFLAGS="-L/usr/local/opt/openssl/lib"
 
+  # LLVM
+  export LLVM_CONFIG=/usr/local/opt/llvm/bin/llvm-config
+
   # Stop brew updating every fucking time
   export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -226,13 +232,8 @@ then
   path+=mac_paths
 
   # Mac beeps
-  function negativebeep() {
-      (say "failed")
-  }
-
-  function positivebeep() {
-      (say --voice Ting-Ting "完了")
-  }
+  function negativebeep() { (say --voice Mei-Jia "不好的") }
+  function positivebeep() { (say --voice Mei-Jia "完了") }
 else
   # Create linux only aliases
   linux_aliases
