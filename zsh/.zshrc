@@ -57,6 +57,10 @@ export LC_ALL=en_AU.UTF-8
 
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+# GPG
+
+export GPG_TTY=$(tty)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
