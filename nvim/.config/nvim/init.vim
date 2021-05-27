@@ -4,10 +4,11 @@ Plug 'neomake/neomake'
 
 Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'altercation/vim-colors-solarized'
 Plug 'keith/parsec.vim'
+
+Plug 'altercation/vim-colors-solarized'
 Plug 'dracula/vim'
-Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/AnsiEsc.vim'
@@ -23,9 +24,10 @@ Plug 'vim-scripts/SearchComplete'
 Plug 'danro/rename.vim'
 Plug 'djoshea/vim-autoread'
 
-Plug 'Shougo/denite.nvim'
 Plug 'airblade/vim-gitgutter'
-Plug 'ervandew/supertab'
+
+" Plug 'ervandew/supertab'
+
 Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
@@ -41,8 +43,6 @@ Plug 'zivyangll/git-blame.vim'
 Plug 'keith/swift.vim'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-
-Plug 'davidhalter/jedi-vim'
 
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
@@ -60,34 +60,89 @@ Plug 'vmchale/dhall-vim'
 
 Plug 'tpope/vim-markdown'
 
-Plug 'supercollider/scvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startuc = 1
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 call plug#end()
 
+lua << EOF
+-- LSP config
+require'lspconfig'.scry.setup{
+  cmd = { 'crystalline' }
+}
+
+vim.lsp.set_log_level("debug")
+
+-- Compe setup
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
+
 let mapleader="\<Space>"
 
 " neomake on save
 call neomake#configure#automake('w')
-
-let g:LanguageClient_serverCommands = {
-    \ 'dhall': ['dhall-lsp-server'],
-    \ }
 
 " comment the next line to disable automatic format on save
 let g:dhall_format=1
@@ -99,8 +154,8 @@ set signcolumn=yes
 set hidden
 
 " Map keybinding
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 
 " Gives you a heads-up when you go over 81 chars per line
 call matchadd('ColorColumn', '\%81v', 100)
@@ -199,13 +254,21 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 " - SuperTab
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabDefaultCompletionType = '<c-n>'
+" let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " syntax zone
 
 syntax on
 set background=dark
+
+" Important!!
+if has('termguicolors')
+    set termguicolors
+endif
+
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:gruvbox_material_background = 'hard'
 
 " change bar when in root
 if($USER ==? 'root')
@@ -213,7 +276,7 @@ if($USER ==? 'root')
     colorscheme dracula
 else
     let g:airline_themE='gruvbox'
-    colorscheme gruvbox
+    colorscheme gruvbox-material
 endif
 
 let g:airline_left_sep=''
@@ -271,14 +334,14 @@ set list
 set listchars=tab:>~,trail:~
 
 " Indents
-set tabstop=8
-set softtabstop=0
-set expandtab
-set shiftwidth=4
-set smarttab
-set shiftround
 set autoindent
+set expandtab
+set shiftround
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
 set smartindent
+set smarttab
 
 " Status line
 set statusline=%F\ %l\:%c
