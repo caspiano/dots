@@ -99,6 +99,8 @@ alias py='python3'
 alias pip='pip3'
 alias ra='ranger'
 
+alias top='btm --color gruvbox'
+
 alias fhs='fast-http-server'
 
 alias c='clear'
@@ -211,7 +213,6 @@ function linux_paths() {
     "$HOME/.screenlayout"
   )
 }
-
 
 if [[ "$PLATTY" -eq "Darwin" ]]
 then

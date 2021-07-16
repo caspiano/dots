@@ -57,4 +57,9 @@ linux() {
 
 [[ -f ${HOME}/.asdf ]] && git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 run_stow
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+cargo install ripgrep bottom
+
 yes | KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
