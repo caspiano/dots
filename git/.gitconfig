@@ -26,6 +26,8 @@
     dh     = diff HEAD
     dc     = diff --cached
     d      = diff
+    freebase = rebase
+    rbc      = rebase --continue
 [color "diff"]
     meta   = 15
     commit = 83
