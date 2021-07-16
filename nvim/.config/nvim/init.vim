@@ -12,6 +12,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/AnsiEsc.vim'
 
+Plug 'Yggdroot/indentLine'
+
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -32,11 +34,16 @@ Plug 'mbbill/undotree'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+
 Plug 'vim-scripts/argtextobj.vim'
+Plug 'michaeljsmith/vim-indent-object'
+
 Plug 'vim-scripts/taglist.vim'
 Plug 'zivyangll/git-blame.vim'
 
 " Languages
+
+Plug 'tidalcycles/vim-tidal'
 
 Plug 'keith/swift.vim'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -60,8 +67,6 @@ Plug 'vmchale/dhall-vim'
 
 Plug 'tpope/vim-markdown'
 
-Plug 'supercollider/scvim'
-
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'autozimu/LanguageClient-neovim', {
@@ -79,6 +84,8 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 call plug#end()
+
+let g:indentLine_char = '│'
 
 let mapleader="\<Space>"
 
