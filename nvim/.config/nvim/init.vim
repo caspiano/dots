@@ -3,6 +3,7 @@ call plug#begin('~/.config/nvim/plugs')
 Plug 'neomake/neomake'
 
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-obsession'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'keith/parsec.vim'
