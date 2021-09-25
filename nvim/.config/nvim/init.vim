@@ -104,7 +104,6 @@ let mapleader="\<Space>"
 call neomake#configure#automake('w')
 
 " Completion
-
 set completeopt=noinsert,menuone,noselect
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set shortmess+=c
@@ -112,13 +111,14 @@ inoremap <c-c> <ESC>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" LSP servers
 let g:LanguageClient_serverCommands = {
     \ 'dhall': ['dhall-lsp-server'],
     \ 'nix': ['rnix-lsp'],
     \ 'crystal': ['crystalline'],
     \ }
 
-" comment the next line to disable automatic format on save
+" Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
 
 " Always draw sign column. Prevent buffer moving when adding/deleting sign.
@@ -201,15 +201,15 @@ function! NumberToggle()
 endfunction
 nnoremap <silent> <C-n> :call NumberToggle()<CR>
 
-"- Crystal clean
+" Crystal clean
 nnoremap <C-F> :!cf --no-color<CR>
 
-"- FZF
+" FZF
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-f> :Rg<CR>
 nnoremap <silent> <C-b> :Buffers<CR>
 
-" close buffer
+" Close buffer
 nnoremap <silent> <Leader>w :BD<CR>
 
 iab <expr> tds strftime("%F %b %T")
@@ -229,16 +229,11 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" - SuperTab
-" let g:SuperTabClosePreviewOnPopupClose = 1
-" let g:SuperTabDefaultCompletionType = '<c-n>'
-
-" syntax zone
-
+" Syntax
 syntax on
 set background=dark
 
-" change bar when in root
+" Change bar when root
 if($USER ==? 'root')
     let g:airline_theme='dracula'
     colorscheme dracula
@@ -250,23 +245,23 @@ endif
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-" - NERDTree
+" NERDTree
 nmap <silent> <Leader>ee :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="right"
 
 " Tag list
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-" search up for a tags dir
+" Search up for a tags dir
 set tags=./tags;$HOME
 
 " alt-] to open in a new window
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-" control q macro mapped to space bar
+" Control q macro mapped to space bar
 nnoremap <Leader><Leader> @q
 
-" keep contents of the paste register when pasting over a visual selection
+" Keep contents of the paste register when pasting over a visual selection
 vnoremap <leader>p "_dP
 
 " Remove any introduced trailing whitespace after moving...
