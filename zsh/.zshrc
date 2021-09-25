@@ -233,7 +233,7 @@ then
   path+=mac_paths
 
   # Mac beeps
-  function negativebeep() { (say --voice Mei-Jia "不好的") }
+  function negativebeep() { (say --voice Mei-Jia "失敗了") }
   function positivebeep() { (say --voice Mei-Jia "完了") }
 else
   # Create linux only aliases
