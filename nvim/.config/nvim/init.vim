@@ -28,7 +28,17 @@ Plug 'djoshea/vim-autoread'
 
 Plug 'Shougo/denite.nvim'
 Plug 'airblade/vim-gitgutter'
-Plug 'ervandew/supertab'
+
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'wellle/tmux-complete.vim'
+Plug 'ncm2/ncm2-github'
+Plug 'subnut/ncm2-github-emoji'
+
+Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+
 Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
@@ -93,8 +103,19 @@ let mapleader="\<Space>"
 " neomake on save
 call neomake#configure#automake('w')
 
+" Completion
+
+set completeopt=noinsert,menuone,noselect
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set shortmess+=c
+inoremap <c-c> <ESC>
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 let g:LanguageClient_serverCommands = {
     \ 'dhall': ['dhall-lsp-server'],
+    \ 'nix': ['rnix-lsp'],
+    \ 'crystal': ['crystalline'],
     \ }
 
 " comment the next line to disable automatic format on save
@@ -107,8 +128,10 @@ set signcolumn=yes
 set hidden
 
 " Map keybinding
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " Gives you a heads-up when you go over 81 chars per line
 call matchadd('ColorColumn', '\%81v', 100)
@@ -207,8 +230,8 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 " - SuperTab
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabDefaultCompletionType = '<c-n>'
+" let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " syntax zone
 
