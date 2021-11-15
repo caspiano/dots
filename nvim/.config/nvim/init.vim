@@ -156,6 +156,7 @@ filetype indent plugin on
 set ignorecase
 set smartcase
 set incsearch
+set showmatch
 
 " Persistent undo
 set undodir=~/.config/nvim/undo
@@ -291,6 +292,9 @@ let g:NERDTrimTrailingWhitespace = 1
 
 nmap <C-Bslash> :NERDComToggleComment<CR>
 vmap <C-Bslash> :NERDComToggleComment<CR>gv
+
+" Don't redraw when running macros
+set lazyredraw
 
 " Naughty chars
 set list
