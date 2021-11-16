@@ -35,7 +35,7 @@ if [[ "$PLATTY" -eq "Darwin" ]]
 then
   plugins+=(
     brew
-    osx
+    macos
   )
 else
   plugins+=(
