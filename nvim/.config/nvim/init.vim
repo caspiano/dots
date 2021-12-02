@@ -121,6 +121,13 @@ let g:LanguageClient_serverCommands = {
 " Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
 
+"Cycle through buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
+"Cycle through windows
+nnoremap <C-Tab> <C-w>w
+
 " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set signcolumn=yes
 
