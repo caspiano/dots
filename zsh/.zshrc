@@ -159,14 +159,16 @@ alias qq='exit'
 alias :q='exit'
 alias t='tmux'
 
-alias s=scratch
-alias scratch='nvim ~/.scratch.md'
-alias chinese='nvim ~/.chinese.md'
-alias work='nvim ~/.work.md'
-alias pers='nvim ~/.personal.md'
-alias tasks='taskell ~/.taskell.md'
+# Notes
 
-alias dev_box='ssh -L 127.0.0.1:8080:localhost:8080 dev_box'
+alias brain='find ~/brain -type f | rg -v "(/\.|:$|^$|.git|node_modules|/$)" | sed -e "s|$(pwd)/||g" | fzf | xargs nvim'
+alias s=scratch
+alias scratch='nvim ~/brain/inbox.md'
+alias chinese='nvim ~/brain/learning/chinese/中文.md'
+alias 中文='chinese'
+alias work='nvim ~/brain/work/placeos/inbox.md'
+
+# Platform specific aliases
 
 function mac_aliases() {
   alias l='ls -G1h'
@@ -233,7 +235,7 @@ then
   path+=mac_paths
 
   # Mac beeps
-  function negativebeep() { (say --voice Mei-Jia "失敗了") }
+  function negativebeep() { (say --voice Mei-Jia "哎呀") }
   function positivebeep() { (say --voice Mei-Jia "完了") }
 else
   # Create linux only aliases
