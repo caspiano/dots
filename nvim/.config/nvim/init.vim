@@ -16,11 +16,12 @@ Plug 'vim-scripts/AnsiEsc.vim'
 Plug 'Yggdroot/indentLine'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
 Plug 'scrooloose/nerdcommenter'
-Plug 'severin-lemaignan/vim-minimap'
 Plug 'vim-scripts/SearchComplete'
 
 Plug 'danro/rename.vim'
@@ -46,8 +47,12 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
+" Introduces 'a' -> argument
 Plug 'vim-scripts/argtextobj.vim'
+" Introduces 'i' -> indent
 Plug 'michaeljsmith/vim-indent-object'
+" Introduces 'c' -> column
+Plug 'coderifous/textobj-word-column.vim'
 
 Plug 'vim-scripts/taglist.vim'
 Plug 'zivyangll/git-blame.vim'
@@ -121,11 +126,11 @@ let g:LanguageClient_serverCommands = {
 " Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
 
-"Cycle through buffers
+" Cycle through buffers
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
-"Cycle through windows
+" Cycle through windows
 nnoremap <C-Tab> <C-w>w
 
 " Always draw sign column. Prevent buffer moving when adding/deleting sign.
@@ -255,6 +260,7 @@ let g:airline_right_sep=''
 
 " NERDTree
 nmap <silent> <Leader>ee :NERDTreeToggle<CR>
+let g:NERDTreeShowHidden=1
 let g:NERDTreeWinPos="right"
 
 " Tag list
