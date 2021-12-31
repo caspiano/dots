@@ -1,15 +1,15 @@
-# Path to your oh-my-zsh installation.
+# Path oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="afowler"
 
-# Uncomment the following line to enable command auto-correction.
+# Enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-# Uncomment the following line to display red dots whilst waiting for completion.
+# Display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
-# Uncomment the following line if you want to disable marking untracked files under git
+# Disable marking untracked files under git
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Insecure completions
@@ -20,15 +20,15 @@ PLATTY=$(uname -s)
 plugins=(
   asdf           # Generic language version manager
   autojump       # Memorise visited directories
-  cargo          # Rust dep manager
   compleat       # Completion and correction
   dircycle       # Reference dirs in your nav stack
-  docker         # Duh
-  docker-compose # Duh
+  docker
+  docker-compose
   fzf            # Fuzzy phinder
-  git            # Duh
-  nmap           # _The_ nmap
-  npm            # Node dep manager
+  git
+  nmap
+  npm            # Node package manager
+  rust
 )
 
 if [[ "$PLATTY" -eq "Darwin" ]]
@@ -44,7 +44,7 @@ else
 fi
 
 # User configuration
-# !!!!!!!!!!!!!!!!!!
+###############################################################################
 
 # Locales
 
@@ -91,7 +91,7 @@ alias zshrc="vim ~/.zshrc && source ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 
 # Aliases
-#################################
+###############################################################################
 
 alias code='codium'
 
@@ -187,7 +187,7 @@ function linux_aliases() {
 }
 
 # Path
-################################################
+###############################################################################
 
 path+=(
   "$HOME/.shards/bin"
@@ -273,7 +273,7 @@ path+="."
 export PATH
 
 # Functions
-################################################
+###############################################################################
 
 function y() {
     previous=$?;
@@ -285,12 +285,12 @@ function y() {
 }
 
 # PlaceOS related
-################################################
+###############################################################################
+
 export SG_ENV="development"
-################################################
 
 # Language configurations
-################################################
+###############################################################################
 
 export CC="clang"
 
@@ -301,7 +301,7 @@ export CRYSTAL_WORKERS=4
 export SHARDS_OPTS="--ignore-crystal-version"
 
 # Environments
-################################################
+###############################################################################
 
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"
