@@ -1,11 +1,13 @@
 call plug#begin('~/.config/nvim/plugs')
 
+" Perfomance regression in neovim
+Plug 'antoinemadec/FixCursorHold.nvim'
+
 Plug 'neomake/neomake'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-obsession'
 
-Plug 'altercation/vim-colors-solarized'
 Plug 'keith/parsec.vim'
 Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
@@ -15,7 +17,7 @@ Plug 'vim-scripts/AnsiEsc.vim'
 
 Plug 'Yggdroot/indentLine'
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -54,7 +56,6 @@ Plug 'michaeljsmith/vim-indent-object'
 " Introduces 'c' -> column
 Plug 'coderifous/textobj-word-column.vim'
 
-Plug 'vim-scripts/taglist.vim'
 Plug 'zivyangll/git-blame.vim'
 
 " Languages
@@ -262,15 +263,6 @@ let g:airline_right_sep=''
 nmap <silent> <Leader>ee :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinPos="right"
-
-" Tag list
-nnoremap <silent> <F8> :TlistToggle<CR>
-
-" Search up for a tags dir
-set tags=./tags;$HOME
-
-" alt-] to open in a new window
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Control q macro mapped to space bar
 nnoremap <Leader><Leader> @q
