@@ -26,6 +26,8 @@ plugins=(
   docker-compose
   fzf            # Fuzzy phinder
   git
+  git-auto-fetch
+  git-escape-magic
   nmap
   npm            # Node package manager
   rust
@@ -46,6 +48,9 @@ fi
 # User configuration
 ###############################################################################
 
+setopt aliases
+setopt extendedglob
+
 # Locales
 
 export TZ='Australia/Sydney'
@@ -61,19 +66,9 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export GPG_TTY=$(tty)
 
+# OMZ
+
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-# !!!!!!!!!!!!!!!!!!
-
-setopt aliases
-setopt extendedglob
-
-# Locales
-
-export LANG=en_AU.UTF-8
-export LC_MESSAGES=en_AU.UTF-8
-export LC_ALL=en_AU.UTF-8
 
 # SSH
 
@@ -294,6 +289,8 @@ export SG_ENV="development"
 
 export CC="clang"
 
+export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+
 export GOPATH="$HOME/.go"
 
 export CRYSTAL_WORKERS=4
@@ -319,8 +316,6 @@ export NVM_DIR="$HOME/.nvm"
 # ghcup
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry
-[ -f $HOME/.poetry/env ] && . $HOME/.poetry/env 
-# broot
-[ -f $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br ] && . $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br 
+[ -f $HOME/.poetry/env ] && . $HOME/.poetry/env
 
 export PATH="$HOME/.poetry/bin:$PATH"
