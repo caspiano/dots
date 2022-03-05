@@ -1,0 +1,4 @@
+dependencies:
+  shards:
+    github: m-o-e/shards
+    branch: add-parallel-fetch

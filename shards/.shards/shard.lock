@@ -1,3 +1,4 @@
+# NOTICE: This lockfile contains some overrides from shard.override.yml
 version: 2.0
 shards:
   ameba:
@@ -10,7 +11,7 @@ shards:
 
   crystalline:
     git: https://github.com/elbywan/crystalline.git
-    version: 0.3.0+git.commit.1b66bdae3f9f5ef69f537e33d18287d433783ee3
+    version: 0.5.0+git.commit.b7a203d0e5d4e37bbe744b371fca77868aca8f71
 
   json_mapping:
     git: https://github.com/crystal-lang/json_mapping.cr.git
@@ -32,11 +33,11 @@ shards:
     git: https://github.com/crystal-lang-tools/scry.git
     version: 0.9.1
 
-  shards:
-    git: https://github.com/crystal-lang/shards.git
-    version: 0.15.0
+  shards: # Overridden
+    git: https://github.com/m-o-e/shards.git
+    version: 0.16.0+git.commit.7f45434b3e5f20dea105b01af7a086d122bcc3ac
 
   version_from_shard:
     git: https://github.com/hugopl/version_from_shard.git
-    version: 1.2.4
+    version: 1.2.5
 
