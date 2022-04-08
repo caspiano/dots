@@ -22,14 +22,12 @@ plugins=(
   autojump       # Memorise visited directories
   compleat       # Completion and correction
   dircycle       # Reference dirs in your nav stack
+  node
   docker
-  docker-compose
   fzf            # Fuzzy phinder
   git
   git-auto-fetch
   git-escape-magic
-  nmap
-  npm            # Node package manager
   rust
 )
 
@@ -144,15 +142,13 @@ alias less='less -R'
 alias lsd='lsd -l'
 alias sharts='shards'
 
-alias rg='rg --color=always'
-
-alias cp='cp -R'
-alias m='mv'
-alias mkdir='mkdir -p'
 alias sl='ls'
 alias qq='exit'
 alias :q='exit'
 alias t='tmux'
+
+alias sbnc='shards build --error-trace --no-codegen'
+alias sup='shards update'
 
 # Notes
 
@@ -187,7 +183,6 @@ function linux_aliases() {
 path+=(
   "$HOME/.shards/bin"
   "$HOME/.scripts"
-  "$HOME/.rbenv/shims"
   "$HOME/.shards/bin"
   "$HOME/.cargo/bin"
   "/usr/local/opt/.fzf/bin"
@@ -256,12 +251,6 @@ else
   }
 fi
 
-# Crystal Env
-if [ -d "$HOME/.crenv" ]; then
-    path+="$HOME/.crenv/bin"
-    eval "$(crenv init -)"
-fi
-
 # This is CRAZY
 path+="."
 
@@ -300,15 +289,8 @@ export SHARDS_OPTS="--ignore-crystal-version"
 # Environments
 ###############################################################################
 
-# Node Version Manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-
 # asdf
 [ -d $HOME/.asdf ] && . $HOME/.asdf/asdf.sh
-# Ruby
-[ -d $HOME/.rbenv ] && eval "$(rbenv init -)"
 # Rust
 [ -f $HOME/.cargo/env ] && . $HOME/.cargo/env
 # Nix
