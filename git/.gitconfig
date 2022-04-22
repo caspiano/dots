@@ -54,3 +54,5 @@
     program = /usr/local/bin/gpg
 [commit]
     gpgsign = true
+[merge]
+	conflictstyle = diff3
