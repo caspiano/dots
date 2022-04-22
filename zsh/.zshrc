@@ -18,17 +18,19 @@ ZSH_DISABLE_COMPFIX="true"
 PLATTY=$(uname -s)
 
 plugins=(
-  asdf           # Generic language version manager
-  autojump       # Memorise visited directories
-  compleat       # Completion and correction
-  dircycle       # Reference dirs in your nav stack
+  asdf                     # Generic language version manager
+  autojump                 # Memorise visited directories
+  compleat                 # Completion and correction
+  dircycle                 # Reference dirs in your nav stack
   node
   docker
-  fzf            # Fuzzy phinder
+  fzf                      # Fuzzy phinder
   git
   git-auto-fetch
   git-escape-magic
+  history-substring-search # Glorious fish shell feature (use arrows for completion)
   rust
+  zsh-interactive-cd       # fzf cd (sounds good?)
 )
 
 if [[ "$PLATTY" -eq "Darwin" ]]
