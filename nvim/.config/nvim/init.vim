@@ -2,6 +2,8 @@ call plug#begin('~/.config/nvim/plugs')
 
 " Perfomance regression in neovim
 Plug 'antoinemadec/FixCursorHold.nvim'
+" Better scroll
+Plug 'karb94/neoscroll.nvim'
 
 Plug 'neomake/neomake'
 
@@ -19,6 +21,7 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'unkiwii/vim-nerdtree-sync'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -44,10 +47,11 @@ Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
+Plug 'haya14busa/vim-asterisk'
 Plug 'mbbill/undotree'
-Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'takac/vim-hardtime'
 
 " Introduces 'a' -> argument
 Plug 'vim-scripts/argtextobj.vim'
