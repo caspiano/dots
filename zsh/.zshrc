@@ -1,49 +1,80 @@
-# Path oh-my-zsh
-export ZSH="$HOME/.oh-my-zsh"
+# Some plugins are platform dependent
+PLATFORM="$(uname -s)"
 
 ZSH_THEME="afowler"
+ZSHRC="${HOME}/.zshrc"
 
-# Enable command auto-correction.
-ENABLE_CORRECTION="true"
+ZGEN_SOURCE="$HOME/.local/share/zgenom"
+ZGEN_RESET_ON_CHANGE="${ZSHRC}"
 
-# Display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# Download zgen
+[[ -f "$ZGEN_SOURCE/zgenom.zsh" ]] ||
+    git clone --depth 1 -- "https://github.com/jandamm/zgenom" "$ZGEN_SOURCE"
+
+source "$ZGEN_SOURCE/zgenom.zsh"
+
+# Updates every 7 days, this does not increase the startup time.
+zgenom autoupdate
+
+# Compile plugins if the init script doesn't exist
+if ! zgenom saved; then
+  # Balm for completion issues with omz plugins
+  zgenom compdef
+
+  # Theme
+  zgenom load zshzoo/omz-themes-standalone
+
+  # omz plugins
+  ##############################################################################
+
+  zgenom ohmyzsh plugins/compleat                 # Completion and correction
+  zgenom ohmyzsh plugins/autojump                 # Memorise visited directories
+  zgenom ohmyzsh plugins/dircycle                 # Numerically reference previous dirs
+  zgenom ohmyzsh plugins/git
+  zgenom ohmyzsh plugins/git-auto-fetch
+  zgenom ohmyzsh plugins/git-escape-magic
+  zgenom ohmyzsh plugins/bgnotify                 # Cross-platform notifications
+
+  # Platform specific plugins
+  ##############################################################################
+
+  # MacOS
+  [[ "$PLATFORM" -eq "Darwin" ]] && (
+    zgenom ohmyzsh plugins/brew
+    zgenom ohmyzsh plugins/macos
+  )
+
+  # Arch
+  [[ -f "/etc/arch-release" ]] && zgenom ohmyzsh plugins/archlinux
+
+  # Tools
+  ##############################################################################
+
+  # Fuzzy finding QoL enhancements
+  zgenom load unixorn/fzf-zsh-plugin
+  zgenom load Aloxaf/fzf-tab
+
+  # Terminal syntax highlighting (has to be before `zshr-history-substring-search`)
+  zgenom load zdharma-continuum/fast-syntax-highlighting
+
+  # Glorious fish shell feature (use arrows for completion)
+  zgenom load zsh-users/zsh-history-substring-search
+
+  # Suggestions like fish shell
+  zgenom load zsh-users/zsh-autosuggestions
+
+  # Completions
+  zgenom load zsh-users/zsh-completions src
+
+  # (MUST BE LAST IN THIS BLOCK) Generate the init script from plugins above 
+  zgenom save
+fi
 
 # Disable marking untracked files under git
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Insecure completions
 ZSH_DISABLE_COMPFIX="true"
-
-PLATTY=$(uname -s)
-
-plugins=(
-  asdf                     # Generic language version manager
-  autojump                 # Memorise visited directories
-  compleat                 # Completion and correction
-  dircycle                 # Reference dirs in your nav stack
-  node
-  docker
-  fzf                      # Fuzzy phinder
-  git
-  git-auto-fetch
-  git-escape-magic
-  history-substring-search # Glorious fish shell feature (use arrows for completion)
-  rust
-  zsh-interactive-cd       # fzf cd (sounds good?)
-)
-
-if [[ "$PLATTY" -eq "Darwin" ]]
-then
-  plugins+=(
-    brew
-    macos
-  )
-else
-  plugins+=(
-    archlinux
-  )
-fi
 
 # User configuration
 ###############################################################################
@@ -66,23 +97,19 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 export GPG_TTY=$(tty)
 
-# OMZ
-
-source $ZSH/oh-my-zsh.sh
-
 # SSH
 
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Tmux
 
-export TMUX_PLUGIN_MANAGER_PATH=$HOME/.tmux/plugins/
+export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
 
 # Config
 
 export EDITOR="/usr/local/bin/nvim"
 
-alias zshrc="vim ~/.zshrc && source ~/.zshrc"
+alias zshrc="vim ${ZSHRC} && source ${ZSHRC}"
 alias vimrc="vim ~/.vimrc"
 
 # Aliases
@@ -92,23 +119,17 @@ alias code='codium'
 
 alias py='python3'
 alias pip='pip3'
-alias ra='ranger'
 
 alias top='btm --color gruvbox'
-
-alias fhs='fast-http-server'
 
 alias c='clear'
 
 alias cs='crystal spec'
 alias cf='crystal tool format'
 alias cfa='crystal tool format && ameba'
-
-alias messenger='fb-messenger-cli'
-alias mess='fb-messenger-cli'
-alias tv='terminal_velocity'
-
-alias turtle-template='vim < $HOME/.templates/TurtleTemplate.hs'
+alias sbnc='shards build --error-trace --no-codegen'
+alias sup='shards update'
+alias gts='git tag v$(shards version)'
 
 alias vim='nvim'
 alias vi='nvim'
@@ -120,15 +141,17 @@ alias pwdc='echo "$(pwd)" | tee "$(tty)" | pbcopy'
 
 alias we='watch-exec'
 
+function git_default_branch() (
+  (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') 2>/dev/null
+)
+
 alias cz='git cz'
+alias git-branch-clean='git fetch && git co $(git_default_branch) && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
+alias gpat='git push --tags'
+alias gs='git s'
 alias g='git'
 alias gap='git add --patch'
 alias gdc='git dc'
-alias git-branch-clean='git fetch && git co master && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
-alias gpat='git push --tags'
-alias gs='git s'
-
-alias gts='git tag v$(shards version)'
 
 alias ldo='lazydocker'
 alias d='docker'
@@ -136,7 +159,7 @@ alias dc='docker-compose'
 alias dicker='docker'
 alias dokcer='docker'
 alias docker-clean='docker-container-clean; docker-volume-clean; yes | docker system prune | tail -1'
-alias docker-container-clean='docker container ls --no-trunc --format '{{.ID}}' | xargs docker container rm -v 2> /dev/null'
+alias docker-container-clean="docker container ls --no-trunc --format '{{.ID}}' | xargs docker container rm -v 2> /dev/null"
 alias docker-volume-clean='docker volume ls -q | xargs docker volume rm 2> /dev/null'
 
 alias cx='chmod +x'
@@ -149,17 +172,14 @@ alias qq='exit'
 alias :q='exit'
 alias t='tmux'
 
-alias sbnc='shards build --error-trace --no-codegen'
-alias sup='shards update'
-
 # Notes
 
 alias brain='find ~/brain -type f | rg -v "(/\.|:$|^$|.git|node_modules|/$)" | sed -e "s|$(pwd)/||g" | fzf | xargs nvim'
 alias s=scratch
-alias scratch='nvim ~/brain/inbox.md'
-alias chinese='nvim ~/brain/learning/chinese/中文.md'
-alias 中文='chinese'
-alias work='nvim ~/brain/work/placeos/inbox.md'
+alias scratch="nvim ${HOME}/brain/inbox.md"
+alias chinese="nvim ${HOME}/brain/learning/chinese/中文.md"
+alias 中文="chinese"
+alias work="nvim ${HOME}/brain/work/placeos/inbox.md"
 
 # Platform specific aliases
 
@@ -192,7 +212,7 @@ path+=(
   $(yarn global bin)
 )
 
-path+="/usr/local/opt/llvm@8/bin"
+path+="/usr/local/opt/llvm@13/bin"
 
 function mac_paths() {
   return (
@@ -208,7 +228,7 @@ function linux_paths() {
   )
 }
 
-if [[ "$PLATTY" -eq "Darwin" ]]
+if [[ "$PLATFORM" -eq "Darwin" ]]
 then
   # OpenSSL
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig"
@@ -287,6 +307,11 @@ export GOPATH="$HOME/.go"
 export CRYSTAL_WORKERS=4
 
 export SHARDS_OPTS="--ignore-crystal-version"
+
+export DENO_INSTALL="${HOME}/.deno"
+path+="$DENO_INSTALL/bin"
+
+export PATH
 
 # Environments
 ###############################################################################
