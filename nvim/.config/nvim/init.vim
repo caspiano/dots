@@ -2,6 +2,7 @@ call plug#begin('~/.config/nvim/plugs')
 
 " Perfomance regression in neovim
 Plug 'antoinemadec/FixCursorHold.nvim'
+
 " Better scroll
 Plug 'karb94/neoscroll.nvim'
 
@@ -32,17 +33,14 @@ Plug 'vim-scripts/SearchComplete'
 Plug 'danro/rename.vim'
 Plug 'djoshea/vim-autoread'
 
-Plug 'Shougo/denite.nvim'
 Plug 'airblade/vim-gitgutter'
+Plug 'zivyangll/git-blame.vim'
 
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-github'
-Plug 'subnut/ncm2-github-emoji'
-
 Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 
 Plug 'jiangmiao/auto-pairs'
@@ -60,31 +58,28 @@ Plug 'michaeljsmith/vim-indent-object'
 " Introduces 'c' -> column
 Plug 'coderifous/textobj-word-column.vim'
 
-Plug 'zivyangll/git-blame.vim'
+"Languages
 
-" Languages
+Plug 'ncm2/ncm2-jedi', { 'for': 'python' }
 
 Plug 'tidalcycles/vim-tidal'
 
-Plug 'keith/swift.vim'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'keith/swift.vim', { 'for': 'swift' }
 
-Plug 'davidhalter/jedi-vim'
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'markdown'] }
 
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 
-Plug 'neovimhaskell/haskell-vim'
-Plug 'derekelkins/agda-vim'
-Plug 'idris-hackers/idris-vim'
-Plug 'vmchale/ats-vim'
+Plug 'derekelkins/agda-vim', { 'for': 'agda' }
+Plug 'idris-hackers/idris-vim', { 'for': 'idris' }
+Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell', 'markdown'] }
+Plug 'vmchale/ats-vim', { 'for': 'ats' }
+Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 
 Plug 'tpope/vim-endwise'
-Plug 'rhysd/vim-crystal'
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-
-Plug 'vmchale/dhall-vim'
+Plug 'rhysd/vim-crystal', { 'for': ['crystal', 'markdown'] }
+Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'markdown'] }
 
 Plug 'tpope/vim-markdown'
 
@@ -96,13 +91,10 @@ if has('nvim')
       \ }
 else
   Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-let g:deoplete#enable_at_startuc = 1
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+let g:deoplete#enable_at_startuc = 1
 
 call plug#end()
 
@@ -114,10 +106,10 @@ let mapleader="\<Space>"
 call neomake#configure#automake('w')
 
 " Completion
-set completeopt=noinsert,menuone,noselect
 autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
 set shortmess+=c
-inoremap <c-c> <ESC>
+
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
@@ -125,8 +117,10 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:LanguageClient_serverCommands = {
     \ 'dhall': ['dhall-lsp-server'],
     \ 'nix': ['rnix-lsp'],
-    \ 'crystal': ['crystalline'],
+    \ 'sh': ['bash-language-server', 'start'],
+    \ 'bash': ['bash-language-server', 'start'],
     \ }
+    " \ 'crystal': ['crystalline'],
 
 " Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
@@ -134,15 +128,6 @@ let g:dhall_format=1
 " Cycle through buffers
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
-
-" Cycle through windows
-nnoremap <C-Tab> <C-w>w
-
-" Always draw sign column. Prevent buffer moving when adding/deleting sign.
-set signcolumn=yes
-
-" Required for operations modifying multiple buffers like rename.
-set hidden
 
 " Map keybinding
 nnoremap <silent> <F5> :call LanguageClient_contextMenu()<CR>
@@ -158,38 +143,18 @@ highlight ColorColumn ctermbg=red
 nnoremap <silent> <Leader>u :UndotreeToggle<CR>
 let g:mundo_prefer_python3 = 1
 
-" Standard stuff to let you know where you are
-set number
-set relativenumber
-set wildmenu
-
-" Shell trix to load env
-set shellcmdflag=-ic
-
 " Automatically detect indent from filetype
 filetype indent plugin on
-
-" Search matching options
-set ignorecase
-set smartcase
-set incsearch
-set showmatch
-
-" Persistent undo
-set undodir=~/.config/nvim/undo
-set undofile
-
-" Get rid of swap files... might not be the best idea
-set noswapfile
 
 " Set some language specific syntax options
 autocmd Filetype yaml setlocal et ts=2 sw=2 sts=2
 autocmd Filetype haskell setlocal et ts=2 sw=2 sts=2
 autocmd Filetype crystal setlocal et ts=2 sw=2 sts=2
-autocmd Filetype markdown setlocal spell
+autocmd Filetype markdown setlocal spell et ts=2 sw=2 sts=2
 
 " Markdown
 let g:markdown_fenced_languages = ['crystal', 'ruby', 'haskell', 'css', 'typescript', 'javascript', 'js=javascript', 'json=javascript'] 
+let g:markdown_syntax_conceal = 0
 
 " Better pane navigation
 nnoremap <C-J> <C-W><C-J>
@@ -207,7 +172,7 @@ inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 
-" Relative or absolute number lines
+" Toggle between relative and absolute number lines
 function! NumberToggle()
     if (&relativenumber == 1)
         set number
@@ -249,7 +214,17 @@ let g:fzf_colors =
 
 " Syntax
 syntax on
+
 set background=dark
+" Toggle between dark and light
+function! BackgroundToggle()
+    if (&background == 'dark')
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+nnoremap <silent> <C-T> :call BackgroundToggle()<CR>
 
 " Change bar when root
 if($USER ==? 'root')
@@ -273,9 +248,6 @@ nnoremap <Leader><Leader> @q
 
 " Keep contents of the paste register when pasting over a visual selection
 vnoremap <leader>p "_dP
-
-" Remove any introduced trailing whitespace after moving...
-" let g:DVB_TrimWS = 1
 
 " Q mapped to q
 nnoremap Q q
@@ -302,6 +274,33 @@ let g:NERDTrimTrailingWhitespace = 1
 nmap <C-Bslash> :NERDComToggleComment<CR>
 vmap <C-Bslash> :NERDComToggleComment<CR>gv
 
+" Decadent colour rendering
+set termguicolors
+
+" Always draw sign column. Prevent buffer moving when adding/deleting sign.
+set signcolumn=yes
+
+" Standard stuff to let you know where you are
+set number
+set relativenumber
+set wildmenu
+
+" Shell trix to load env
+set shellcmdflag=-ic
+
+" Search matching options
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
+
+" Persistent undo
+set undodir=~/.config/nvim/undo
+set undofile
+
+" Get rid of swap files... might not be the best idea
+set noswapfile
+
 " Don't redraw when running macros
 set lazyredraw
 
@@ -327,4 +326,5 @@ set noshowmode
 set mouse=a
 set showcmd
 
+" Required for operations modifying multiple buffers like rename.
 set hidden
