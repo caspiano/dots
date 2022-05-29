@@ -4,30 +4,7 @@
 
 set -euo pipefail
 
-mkidr ${HOME}/.local/bin
-
-function run_stow() {
-  check_stow_install
-
-  echo "running stow"
-  # Stow everything except install script
-  stow --target=${HOME} *[^.sh]
-
-  defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
-}
-
-# Check for a stow install, installs if not present
-check_stow_install() {
-  if ! command -v 'stow' &> /dev/null; then
-    echo "no stow install found, attempting to install"
-    if [[ "$(uname -s)" -eq 'Darwin' ]]; then
-      mac
-    else
-      linux
-    fi
-  fi
-  return
-}
+mkdir -p "${HOME}/.local/bin"
 
 mac() {
   if ! command -v 'brew' &> /dev/null; then
@@ -55,11 +32,33 @@ linux() {
   fi
 }
 
+# Check for a stow install, installs if not present
+check_stow_install() {
+  if ! command -v 'stow' &> /dev/null; then
+    echo "no stow install found, attempting to install"
+    if [[ "$(uname -s)" -eq 'Darwin' ]]; then
+      mac
+    else
+      linux
+    fi
+  fi
+  return
+}
+
+function run_stow() {
+  check_stow_install
+
+  echo "running stow"
+  # Stow everything except install script
+  stow --target=${HOME} *[^.sh]
+
+  defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
+}
+
 [[ -f ${HOME}/.asdf ]] && git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
+
 run_stow
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 cargo install ripgrep bottom
-
-yes | KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
