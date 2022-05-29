@@ -124,7 +124,12 @@ alias cz='git cz'
 alias g='git'
 alias gap='git add --patch'
 alias gdc='git dc'
-alias git-branch-clean='git fetch && git co master && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
+
+function git_default_branch() (
+  (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') 2>/dev/null
+)
+
+alias git-branch-clean='git fetch && git co $(git_default_branch) && git branch -vv | rg gone | cut -f3 -d" " | xargs -- git branch -D'
 alias gpat='git push --tags'
 alias gs='git s'
 
@@ -287,6 +292,10 @@ export GOPATH="$HOME/.go"
 export CRYSTAL_WORKERS=4
 
 export SHARDS_OPTS="--ignore-crystal-version"
+
+export DENO_INSTALL="${HOME}/.deno"
+path+="$DENO_INSTALL/bin"
+export PATH
 
 # Environments
 ###############################################################################
