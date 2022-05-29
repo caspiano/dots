@@ -10,7 +10,7 @@ shards:
 
   crystalline:
     git: https://github.com/elbywan/crystalline.git
-    version: 0.5.0+git.commit.dd19ea25a6f3724a3fca644986870bce22a98a67
+    version: 0.6.0+git.commit.a7c9aba74c43efce53941f940da0e1485e95bc7f
 
   json_mapping:
     git: https://github.com/crystal-lang/json_mapping.cr.git
@@ -20,8 +20,20 @@ shards:
     git: https://github.com/crystal-lang-tools/lsp.git
     version: 0.2.0
 
+  lucky_cli:
+    git: https://github.com/luckyframework/lucky_cli.git
+    version: 0.30.0
+
+  lucky_task:
+    git: https://github.com/luckyframework/lucky_task.git
+    version: 0.1.1
+
   molinillo:
     git: https://github.com/crystal-lang/crystal-molinillo.git
+    version: 0.2.0
+
+  nox:
+    git: https://github.com/matthewmcgarvey/nox.git
     version: 0.2.0
 
   priority-queue:
@@ -35,6 +47,10 @@ shards:
   shards:
     git: https://github.com/crystal-lang/shards.git
     version: 0.17.0
+
+  teeplate:
+    git: https://github.com/luckyframework/teeplate.git
+    version: 0.8.5
 
   version_from_shard:
     git: https://github.com/hugopl/version_from_shard.git

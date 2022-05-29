@@ -6,10 +6,10 @@ targets:
     main: lib/ameba/src/cli.cr
   crystalline:
     main: lib/crystalline/src/crystalline.cr
-  scry:
-    main: lib/scry/src/scry.cr
   shards:
     main: lib/shards/src/shards.cr
+  lucky:
+    main: lib/lucky_cli/src/lucky.cr
 
 dependencies:
   ameba:
@@ -21,3 +21,5 @@ dependencies:
     github: crystal-lang-tools/scry
   shards:
     github: crystal-lang/shards
+  lucky_cli:
+    github: luckyframework/lucky_cli
