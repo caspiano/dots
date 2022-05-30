@@ -21,6 +21,9 @@ if ! zgenom saved; then
   # Balm for completion issues with omz plugins
   zgenom compdef
 
+  # Required for a few other plugins
+  zgenom load mafredri/zsh-async
+
   # Theme
   zgenom load zshzoo/omz-themes-standalone
 
@@ -52,19 +55,20 @@ if ! zgenom saved; then
 
   # Fuzzy finding QoL enhancements
   zgenom load unixorn/fzf-zsh-plugin
+  zgenom load seletskiy/zsh-fuzzy-search-and-edit # Needs "mafredi/zsh-async"
   zgenom load Aloxaf/fzf-tab
-
-  # Terminal syntax highlighting (has to be before `zshr-history-substring-search`)
-  zgenom load zdharma-continuum/fast-syntax-highlighting
-
-  # Glorious fish shell feature (use arrows for completion)
-  zgenom load zsh-users/zsh-history-substring-search
 
   # Suggestions like fish shell
   zgenom load zsh-users/zsh-autosuggestions
 
   # Completions
   zgenom load zsh-users/zsh-completions src
+
+  # Terminal syntax highlighting (has to be before `zshr-history-substring-search`)
+  zgenom load zdharma-continuum/fast-syntax-highlighting
+
+  # Glorious fish shell feature (use arrows for completion)
+  zgenom load zsh-users/zsh-history-substring-search
 
   # (MUST BE LAST IN THIS BLOCK) Generate the init script from plugins above 
   zgenom save
@@ -91,7 +95,7 @@ export LC_ALL=en_AU.UTF-8
 
 # SSH
 
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="${HOME}/.ssh/rsa_id"
 
 # GPG
 
@@ -99,7 +103,7 @@ export GPG_TTY=$(tty)
 
 # SSH
 
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="${HOME}/.ssh/rsa_id"
 
 # Tmux
 
@@ -110,12 +114,17 @@ export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
 export EDITOR="/usr/local/bin/nvim"
 
 alias zshrc="vim ${ZSHRC} && source ${ZSHRC}"
-alias vimrc="vim ~/.vimrc"
+alias vimrc="vim ${HOME}/.vimrc"
+
+# Key bindings
+###############################################################################
+
+bindkey '^F' fuzzy-search-and-edit
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # Aliases
 ###############################################################################
-
-alias code='codium'
 
 alias py='python3'
 alias pip='pip3'
@@ -131,6 +140,8 @@ alias sbnc='shards build --error-trace --no-codegen'
 alias sup='shards update'
 alias gts='git tag v$(shards version)'
 
+alias code='codium'
+
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
@@ -138,8 +149,6 @@ alias vo='nvim'
 alias vu='nvim'
 
 alias pwdc='echo "$(pwd)" | tee "$(tty)" | pbcopy'
-
-alias we='watch-exec'
 
 function git_default_branch() (
   (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') 2>/dev/null
@@ -156,16 +165,12 @@ alias gdc='git dc'
 alias ldo='lazydocker'
 alias d='docker'
 alias dc='docker-compose'
-alias dicker='docker'
-alias dokcer='docker'
 alias docker-clean='docker-container-clean; docker-volume-clean; yes | docker system prune | tail -1'
 alias docker-container-clean="docker container ls --no-trunc --format '{{.ID}}' | xargs docker container rm -v 2> /dev/null"
 alias docker-volume-clean='docker volume ls -q | xargs docker volume rm 2> /dev/null'
 
 alias cx='chmod +x'
 alias less='less -R'
-alias lsd='lsd -l'
-alias sharts='shards'
 
 alias sl='ls'
 alias qq='exit'
@@ -178,7 +183,6 @@ alias brain='find ~/brain -type f | rg -v "(/\.|:$|^$|.git|node_modules|/$)" | s
 alias s=scratch
 alias scratch="nvim ${HOME}/brain/inbox.md"
 alias chinese="nvim ${HOME}/brain/learning/chinese/中文.md"
-alias 中文="chinese"
 alias work="nvim ${HOME}/brain/work/placeos/inbox.md"
 
 # Platform specific aliases
@@ -199,16 +203,32 @@ function linux_aliases() {
   alias open='xdg-open'
 }
 
+# Language configurations
+###############################################################################
+
+export CC="clang"
+
+export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+
+export GOPATH="$HOME/.go"
+
+export CRYSTAL_WORKERS=4
+
+export SHARDS_OPTS="--ignore-crystal-version"
+
+export POETRY_HOME="$HOME/.poetry"
+
 # Path
 ###############################################################################
 
 path+=(
-  "$HOME/.shards/bin"
+  "$DENO_INSTALL/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.local/bin"
   "$HOME/.scripts"
   "$HOME/.shards/bin"
-  "$HOME/.cargo/bin"
+  "$POETRY_HOME/bin"
   "/usr/local/opt/.fzf/bin"
-  "$HOME/.local/bin"
   $(yarn global bin)
 )
 
@@ -295,24 +315,6 @@ function y() {
 
 export SG_ENV="development"
 
-# Language configurations
-###############################################################################
-
-export CC="clang"
-
-export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-
-export GOPATH="$HOME/.go"
-
-export CRYSTAL_WORKERS=4
-
-export SHARDS_OPTS="--ignore-crystal-version"
-
-export DENO_INSTALL="${HOME}/.deno"
-path+="$DENO_INSTALL/bin"
-
-export PATH
-
 # Environments
 ###############################################################################
 
@@ -325,6 +327,4 @@ export PATH
 # ghcup
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry
-[ -f $HOME/.poetry/env ] && . $HOME/.poetry/env
-
-export PATH="$HOME/.poetry/bin:$PATH"
+[ -f $POETRY_HOME/env ] && . $POETRY_HOME/env
