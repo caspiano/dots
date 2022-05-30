@@ -55,7 +55,7 @@ function run_stow() {
   defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 }
 
-[[ -f ${HOME}/.asdf ]] && git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
+[[ ! -d "${HOME}/.asdf" ]] && git clone https://github.com/asdf-vm/asdf.git "${HOME}/.env"
 
 run_stow
 
