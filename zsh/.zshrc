@@ -1,9 +1,4 @@
-# Some plugins are platform dependent
-PLATFORM="$(uname -s)"
-
-ZSH_THEME="afowler"
 ZSHRC="${HOME}/.zshrc"
-
 ZGEN_SOURCE="$HOME/.local/share/zgenom"
 ZGEN_RESET_ON_CHANGE="${ZSHRC}"
 
@@ -22,6 +17,9 @@ ENABLE_CORRECTION="true"
 
 # Disable marking untracked files under git
 DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Some plugins are platform dependent
+PLATFORM="$(uname -s)"
 
 ###############################################################################
 
