@@ -21,6 +21,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Some plugins are platform dependent
 PLATFORM="$(uname -s)"
 
+# Emacs-style bindings because they are overidden somehow.
+# For some reason, I find it nicer than vim in this context.
+bindkey -e
+
 ###############################################################################
 
 source "$ZGEN_SOURCE/zgenom.zsh"
@@ -84,7 +88,7 @@ if ! zgenom saved; then
   # Glorious fish shell feature (use arrows for completion)
   zgenom load zsh-users/zsh-history-substring-search
 
-  # (MUST BE LAST IN THIS BLOCK) Generate the init script from plugins above 
+  # (MUST BE LAST IN THIS BLOCK) Generate the init script from plugins above
   zgenom save
 fi
 
