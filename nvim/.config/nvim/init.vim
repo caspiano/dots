@@ -94,7 +94,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-let g:deoplete#enable_at_startuc = 1
+let g:deoplete#enable_at_startup = 1
 
 call plug#end()
 
