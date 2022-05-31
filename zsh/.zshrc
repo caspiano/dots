@@ -131,6 +131,14 @@ bindkey '^F' fuzzy-search-and-edit
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
+# History
+
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+
+export HISTSIZE=100000
+export SAVEHIST=100000
+
 # Aliases
 ###############################################################################
 
