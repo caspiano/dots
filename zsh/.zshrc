@@ -11,6 +11,20 @@ ZGEN_RESET_ON_CHANGE="${ZSHRC}"
 [[ -f "$ZGEN_SOURCE/zgenom.zsh" ]] ||
     git clone --depth 1 -- "https://github.com/jandamm/zgenom" "$ZGEN_SOURCE"
 
+# Plugin configuration (in some cases, required before the plugin is loaded)
+###############################################################################
+
+# Minimal magic theme
+ZSH_THEME="afowler"
+
+# Command corrections
+ENABLE_CORRECTION="true"
+
+# Disable marking untracked files under git
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+###############################################################################
+
 source "$ZGEN_SOURCE/zgenom.zsh"
 
 # Updates every 7 days, this does not increase the startup time.
@@ -30,15 +44,15 @@ if ! zgenom saved; then
   # omz plugins
   ##############################################################################
 
-  zgenom ohmyzsh plugins/compleat                 # Completion and correction
-  zgenom ohmyzsh plugins/autojump                 # Memorise visited directories
-  zgenom ohmyzsh plugins/dircycle                 # Numerically reference previous dirs
+  zgenom ohmyzsh lib/correction.zsh        # Correction
+  zgenom ohmyzsh plugins/autojump          # Memorise visited directories
+  zgenom ohmyzsh plugins/dircycle          # Numerically reference previous dirs
   zgenom ohmyzsh plugins/docker
   zgenom ohmyzsh plugins/docker-compose
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/git-auto-fetch
   zgenom ohmyzsh plugins/git-escape-magic
-  zgenom ohmyzsh plugins/bgnotify                 # Cross-platform notifications
+  zgenom ohmyzsh plugins/bgnotify          # Cross-platform notifications
 
   # Platform specific plugins
   ##############################################################################
@@ -75,12 +89,6 @@ if ! zgenom saved; then
   # (MUST BE LAST IN THIS BLOCK) Generate the init script from plugins above 
   zgenom save
 fi
-
-# Disable marking untracked files under git
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Insecure completions
-ZSH_DISABLE_COMPFIX="true"
 
 # User configuration
 ###############################################################################
