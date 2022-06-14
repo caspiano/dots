@@ -27,16 +27,6 @@ bindkey -e
 
 ###############################################################################
 
-# Case insensitive tab completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-# Speed up completions
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-
-###############################################################################
-
 source "$ZGEN_SOURCE/zgenom.zsh"
 
 # Updates every 7 days, this does not increase the startup time.
@@ -104,6 +94,14 @@ fi
 
 # User configuration
 ###############################################################################
+
+# Case insensitive tab completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 
 setopt aliases
 setopt extendedglob
