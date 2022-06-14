@@ -20,9 +20,13 @@ Plug 'vim-scripts/AnsiEsc.vim'
 
 Plug 'Yggdroot/indentLine'
 
+" Directory Viewer
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'unkiwii/vim-nerdtree-sync'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Find and Replace
+Plug 'brooth/far.vim'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -33,8 +37,12 @@ Plug 'vim-scripts/SearchComplete'
 Plug 'danro/rename.vim'
 Plug 'djoshea/vim-autoread'
 
+" Git
 Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
+
+" GitHub
+Plug 'github/copilot.vim'
 
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
@@ -105,8 +113,15 @@ let mapleader="\<Space>"
 " neomake on save
 call neomake#configure#automake('w')
 
+set fillchars=vert:│,fold:┈,diff:┈
+
 " Completion
-autocmd BufEnter * call ncm2#enable_for_buffer()
+function s:ncm2_start(...)
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+endfunc
+
+call timer_start(200, function('s:ncm2_start'))
+
 set completeopt=noinsert,menuone,noselect
 set shortmess+=c
 
