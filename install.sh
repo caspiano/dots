@@ -14,6 +14,7 @@ mac() {
 
   brew install stow
   bash update_crystalline_osx.sh
+  defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 }
 
 linux() {
@@ -49,16 +50,15 @@ function run_stow() {
   check_stow_install
 
   echo "running stow"
-  # Stow everything except install script
-  stow --target=${HOME} *[^.sh]
 
-  defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
+  # Stow everything except install script
+  stow --target=${HOME} */
 }
 
-[[ ! -d "${HOME}/.asdf" ]] && git clone https://github.com/asdf-vm/asdf.git "${HOME}/.env"
+[[ ! -d "${HOME}/.asdf" ]] && git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
 
 run_stow
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-cargo install ripgrep bottom
+source "$HOME/.cargo/env" && cargo install ripgrep bottom
