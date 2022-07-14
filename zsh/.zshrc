@@ -50,6 +50,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/autojump          # Memorise visited directories
   zgenom ohmyzsh plugins/dircycle          # Numerically reference previous dirs
   zgenom ohmyzsh plugins/docker
+  zgenom ohmyzsh plugins/homebrew
   zgenom ohmyzsh plugins/docker-compose
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/git-auto-fetch
