@@ -48,14 +48,14 @@ if ! zgenom saved; then
 
   zgenom ohmyzsh lib/correction.zsh        # Correction
   zgenom ohmyzsh plugins/autojump          # Memorise visited directories
+  zgenom ohmyzsh plugins/bgnotify          # Cross-platform notifications
+  zgenom ohmyzsh plugins/brew
   zgenom ohmyzsh plugins/dircycle          # Numerically reference previous dirs
   zgenom ohmyzsh plugins/docker
-  zgenom ohmyzsh plugins/homebrew
   zgenom ohmyzsh plugins/docker-compose
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/git-auto-fetch
   zgenom ohmyzsh plugins/git-escape-magic
-  zgenom ohmyzsh plugins/bgnotify          # Cross-platform notifications
 
   # Platform specific plugins
   ##############################################################################
@@ -241,7 +241,7 @@ export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
 
 export GOPATH="$HOME/.go"
 
-export CRYSTAL_WORKERS=4
+export CRYSTAL_WORKERS=8
 
 export SHARDS_OPTS="--ignore-crystal-version"
 
