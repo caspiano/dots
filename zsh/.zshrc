@@ -109,7 +109,8 @@ setopt extendedglob
 
 # Locales
 
-export TZ='Australia/Sydney'
+# export TZ='Australia/Sydney'
+export TZ='Asia/Taipei'
 export LANG=en_AU.UTF-8
 export LC_MESSAGES=en_AU.UTF-8
 export LC_ALL=en_AU.UTF-8
@@ -162,6 +163,7 @@ alias top='btm --color gruvbox'
 
 alias c='clear'
 
+alias cr='crystal'
 alias cs='crystal spec'
 alias cf='crystal tool format'
 alias cfa='crystal tool format && ameba'
@@ -212,7 +214,10 @@ alias brain='find ~/brain -type f | rg -v "(/\.|:$|^$|.git|node_modules|/$)" | s
 alias s=scratch
 alias scratch="nvim ${HOME}/brain/inbox.md"
 alias chinese="nvim ${HOME}/brain/learning/chinese/中文.md"
-alias work="nvim ${HOME}/brain/work/placeos/inbox.md"
+
+# Workspace
+
+alias manas='tmux attach -t manas'
 
 # Platform specific aliases
 
@@ -242,8 +247,6 @@ export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
 export GOPATH="$HOME/.go"
 
 export CRYSTAL_WORKERS=8
-
-export SHARDS_OPTS="--ignore-crystal-version"
 
 export POETRY_HOME="$HOME/.poetry"
 
@@ -339,11 +342,6 @@ function y() {
     fi
 }
 
-# PlaceOS related
-###############################################################################
-
-export SG_ENV="development"
-
 # Environments
 ###############################################################################
 
@@ -352,7 +350,9 @@ export SG_ENV="development"
 # Rust
 [ -f $HOME/.cargo/env ] && . $HOME/.cargo/env
 # Nix
-[ -f $HOME/.nix-profile/etc/profile.d/nix.sh ] && . $HOME/.nix-profile/etc/profile.d/nix.sh
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
 # ghcup
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry

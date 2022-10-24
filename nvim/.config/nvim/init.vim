@@ -20,6 +20,9 @@ Plug 'vim-scripts/AnsiEsc.vim'
 
 Plug 'Yggdroot/indentLine'
 
+" Debug Adaptor Protocol
+Plug 'mfussenegger/nvim-dap'
+
 " Directory Viewer
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'unkiwii/vim-nerdtree-sync'
@@ -42,7 +45,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
 
 " GitHub
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
@@ -67,6 +70,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'coderifous/textobj-word-column.vim'
 
 "Languages
+
+Plug 'LnL7/vim-nix'
 
 Plug 'ncm2/ncm2-jedi', { 'for': 'python' }
 
@@ -134,8 +139,8 @@ let g:LanguageClient_serverCommands = {
     \ 'nix': ['rnix-lsp'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'bash': ['bash-language-server', 'start'],
+    \ 'crystal': ['crystalline'],
     \ }
-    " \ 'crystal': ['crystalline'],
 
 " Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
