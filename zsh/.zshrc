@@ -72,6 +72,12 @@ if ! zgenom saved; then
   # Tools
   ##############################################################################
 
+  # Use zshrc in nix-shell
+  zgenom load chisui/zsh-nix-shell
+
+  # Platform independent long-running command notifications
+  zgenom load MichaelAquilina/zsh-auto-notify
+
   # Fuzzy finding QoL enhancements
   zgenom load unixorn/fzf-zsh-plugin
   zgenom load seletskiy/zsh-fuzzy-search-and-edit # Needs "mafredi/zsh-async"
@@ -133,7 +139,7 @@ export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
 
 # Config
 
-export EDITOR="/usr/local/bin/nvim"
+export EDITOR="$(which nvim)"
 
 alias zshrc="vim ${ZSHRC} && source ${ZSHRC}"
 alias vimrc="vim ${HOME}/.vimrc"
@@ -208,13 +214,6 @@ alias qq='exit'
 alias :q='exit'
 alias t='tmux'
 
-# Notes
-
-alias brain='find ~/brain -type f | rg -v "(/\.|:$|^$|.git|node_modules|/$)" | sed -e "s|$(pwd)/||g" | fzf | xargs nvim'
-alias s=scratch
-alias scratch="nvim ${HOME}/brain/inbox.md"
-alias chinese="nvim ${HOME}/brain/learning/chinese/中文.md"
-
 # Workspace
 
 alias manas='tmux attach -t manas'
@@ -284,6 +283,7 @@ if [[ "$PLATFORM" -eq "Darwin" ]]
 then
   # OpenSSL
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig"
+
   export CPPFlAGS="-L/usr/local/opt/openssl/include"
   export LDFLAGS="-L/usr/local/opt/openssl/lib"
 
@@ -333,6 +333,7 @@ export PATH
 # Functions
 ###############################################################################
 
+# Notifications for job completion
 function y() {
     previous=$?;
     if [ $previous -eq 0 ]; then
@@ -342,6 +343,50 @@ function y() {
     fi
 }
 
+# Only define next function if the .openapi_key is detected in the folder
+if [ -f "$HOME/.openapi_key" ]; then
+    API_KEY="$(cat "$HOME/.openapi_key")"
+
+    # GPT completion via `please <prompt>`
+    function please(){
+
+        # Combine all user_prompt into one string
+        user_prompt=""
+        for arg in "$@"; do
+            user_prompt="$user_prompt $arg"
+        done
+
+        # Remove leading spaces
+        user_prompt=${user_prompt:1}
+
+        # Build request body
+        full_prompt="Act as an expert zsh programmer and educator. Variables in your response should be in angle brackets. ONLY respond with the command, do NOT surround with backticks, do NOT explain the command, your response should be exclusively the command. Reply with a succint zsh command used to perform the following:\n$user_prompt"
+
+        body="{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"${full_prompt}\"}], \"temperature\": 0.7, \"max_tokens\": 300}"
+
+        # Fetch and format response
+        result=$(
+            curl https://api.openai.com/v1/chat/completions -s -H "Content-Type: application/json" -H "Authorization: Bearer $API_KEY" -d "$body" \
+            | jq --raw-output '.choices[0].message.content' \
+            | tail -1)
+
+        # Remove leading whitespace characters
+        result="${result#"${result%%[![:space:]]*}"}"
+
+        # # Remove trailing whitespace characters
+        result="${result%"${result##*[![:space:]]}"}"
+
+        # Remove surrounding quotes, backticks, or whitespace if any
+        while [[ $result == \`*\` || $result == \"*\" || $result == \'*\' ]]; do
+            result="${result%?}"
+            result="${result#?}"
+        done
+
+        # send to input buffer
+        print -z $result
+    }
+fi
+
 # Environments
 ###############################################################################
 
@@ -350,9 +395,7 @@ function y() {
 # Rust
 [ -f $HOME/.cargo/env ] && . $HOME/.cargo/env
 # Nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
+[ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ] && . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 # ghcup
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry
