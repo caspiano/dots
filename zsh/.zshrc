@@ -397,6 +397,25 @@ if [ -f "$HOME/.openai_api_key" ]; then
     }
 fi
 
+# Manas
+
+function brium () {
+    # Combine all args into one string
+    message=""
+    for arg in "$@"; do
+        message="$message $arg"
+    done
+
+  curl -XPOST \
+       "https://brium.me/api/messages" \
+       -d "$message" \
+       -H "Authorization: Bearer $(cat "$HOME/.brium" | tr -d '[[:space:]]')"
+}
+
+alias b="brium"
+alias b\?="brium \?"
+alias bb="brium bye"
+
 # Environments
 ###############################################################################
 
