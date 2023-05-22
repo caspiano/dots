@@ -137,6 +137,12 @@ export SSH_KEY_PATH="${HOME}/.ssh/rsa_id"
 
 export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
 
+# Builds
+
+if [[ $(uname -m) =~ "arm64" ]]; then
+  export DOCKER_DEFAULT_PLATFORM=linux/amd64
+fi
+
 # Config
 
 export EDITOR="$(which nvim)"
@@ -343,10 +349,10 @@ function y() {
     fi
 }
 
-# Only define next function if the .openapi_key is detected in the folder
-if [ -f "$HOME/.openapi_key" ]; then
-    API_KEY="$(cat "$HOME/.openapi_key")"
+export OPENAI_API_KEY="$(cat "$HOME/.openai_api_key")"
 
+# Only define next function if the .openai_api_key is detected in the folder
+if [ -f "$HOME/.openai_api_key" ]; then
     # GPT completion via `please <prompt>`
     function please(){
 
@@ -362,13 +368,17 @@ if [ -f "$HOME/.openapi_key" ]; then
         # Build request body
         full_prompt="Act as an expert zsh programmer and educator. Variables in your response should be in angle brackets. ONLY respond with the command, do NOT surround with backticks, do NOT explain the command, your response should be exclusively the command. Reply with a succint zsh command used to perform the following:\n$user_prompt"
 
-        body="{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"${full_prompt}\"}], \"temperature\": 0.7, \"max_tokens\": 300}"
+        body="{\"model\": \"gpt-4\", \"messages\": [{\"role\": \"user\", \"content\": \"${full_prompt}\"}], \"temperature\": 0.7, \"max_tokens\": 300}"
 
         # Fetch and format response
         result=$(
-            curl https://api.openai.com/v1/chat/completions -s -H "Content-Type: application/json" -H "Authorization: Bearer $API_KEY" -d "$body" \
+        curl https://api.openai.com/v1/chat/completions -s \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $(cat "$HOME/.openai_api_key")" \
+            -d "$body" \
             | jq --raw-output '.choices[0].message.content' \
-            | tail -1)
+            | tail -1
+        )
 
         # Remove leading whitespace characters
         result="${result#"${result%%[![:space:]]*}"}"
