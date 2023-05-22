@@ -1,8 +1,9 @@
+# NOTICE: This lockfile contains some overrides from shard.override.yml
 version: 2.0
 shards:
   ameba:
     git: https://github.com/crystal-ameba/ameba.git
-    version: 1.0.0
+    version: 1.4.3
 
   bisect:
     git: https://github.com/spider-gazelle/bisect.git
@@ -10,19 +11,19 @@ shards:
 
   crystalline:
     git: https://github.com/elbywan/crystalline.git
-    version: 0.6.0+git.commit.a7c9aba74c43efce53941f940da0e1485e95bc7f
+    version: 0.9.0+git.commit.ff6a712947a9f1aa1eed90478d5d23942585c4be
 
   json_mapping:
     git: https://github.com/crystal-lang/json_mapping.cr.git
     version: 0.1.1
 
-  lsp:
+  lsp: # Overridden
     git: https://github.com/crystal-lang-tools/lsp.git
     version: 0.2.0
 
   lucky_cli:
     git: https://github.com/luckyframework/lucky_cli.git
-    version: 0.30.0
+    version: 1.0.0
 
   lucky_task:
     git: https://github.com/luckyframework/lucky_task.git
@@ -34,7 +35,7 @@ shards:
 
   nox:
     git: https://github.com/matthewmcgarvey/nox.git
-    version: 0.2.0
+    version: 0.2.2
 
   priority-queue:
     git: https://github.com/spider-gazelle/priority-queue.git
@@ -46,7 +47,7 @@ shards:
 
   shards:
     git: https://github.com/crystal-lang/shards.git
-    version: 0.17.0
+    version: 0.17.3
 
   teeplate:
     git: https://github.com/luckyframework/teeplate.git
