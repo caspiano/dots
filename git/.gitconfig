@@ -44,6 +44,9 @@
 ; [url "git@github.com:"]
 ;     insteadOf = https://github.com/
 
+[stash]
+    showPatch = true
+
 [init]
     defaultBranch = main
 [pull]
@@ -51,10 +54,10 @@
 [advice]
     addIgnoredFile = false
 [gpg]
-    program = /usr/local/bin/gpg
+    program = gpg
 [commit]
     gpgsign = true
 [merge]
-	conflictstyle = diff3
+    conflictstyle = diff3
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
