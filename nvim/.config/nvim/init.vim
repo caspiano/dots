@@ -19,6 +19,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/AnsiEsc.vim'
 
 Plug 'Yggdroot/indentLine'
+Plug 'Darazaki/indent-o-matic'
 
 " Debug Adaptor Protocol
 Plug 'mfussenegger/nvim-dap'
@@ -34,6 +35,7 @@ Plug 'brooth/far.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/SearchComplete'
 
@@ -42,7 +44,7 @@ Plug 'djoshea/vim-autoread'
 
 " Git
 Plug 'airblade/vim-gitgutter'
-Plug 'zivyangll/git-blame.vim'
+Plug 'APZelos/blamer.nvim'
 
 " GitHub
 " Plug 'github/copilot.vim'
@@ -53,6 +55,12 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'wellle/tmux-complete.vim'
 Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-solargraph'
+Plug 'yaegassy/coc-tailwindcss3'
+Plug 'coc-extensions/coc-svelte'
+Plug 'neoclide/coc-emmet'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
@@ -73,6 +81,8 @@ Plug 'coderifous/textobj-word-column.vim'
 
 Plug 'LnL7/vim-nix'
 
+Plug 'elixir-editors/vim-elixir'
+
 Plug 'ncm2/ncm2-jedi', { 'for': 'python' }
 
 Plug 'tidalcycles/vim-tidal'
@@ -80,6 +90,11 @@ Plug 'tidalcycles/vim-tidal'
 Plug 'keith/swift.vim', { 'for': 'swift' }
 
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'markdown'] }
+
+Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
@@ -93,6 +108,7 @@ Plug 'vmchale/dhall-vim', { 'for': 'dhall' }
 Plug 'tpope/vim-endwise'
 Plug 'rhysd/vim-crystal', { 'for': ['crystal', 'markdown'] }
 Plug 'vim-ruby/vim-ruby', { 'for': ['ruby', 'markdown'] }
+Plug 'slim-template/vim-slim'
 
 Plug 'tpope/vim-markdown'
 
@@ -120,6 +136,16 @@ call neomake#configure#automake('w')
 
 set fillchars=vert:│,fold:┈,diff:┈
 
+" Find and Replace
+let g:far#source = 'rg'
+
+nnoremap <silent> <C-S-f> :Farr<cr>
+vnoremap <silent> <C-S-f> :Farr<cr>
+
+" Emmet (HTML completions)
+let g:user_emmet_install_global = 0
+autocmd FileType html,svelte,css EmmetInstall
+
 " Completion
 function s:ncm2_start(...)
     autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -139,8 +165,12 @@ let g:LanguageClient_serverCommands = {
     \ 'nix': ['rnix-lsp'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'bash': ['bash-language-server', 'start'],
-    \ 'crystal': ['crystalline'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
     \ }
+    " \ 'crystal': ['crystalline'],
+
+" Svelte configuration
+let g:svelte_preprocessors = ['typescript']
 
 " Comment the next line to disable automatic format on save for dhall
 let g:dhall_format=1
@@ -155,6 +185,9 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
+" Toggle git blamer
+nnoremap <silent> gb :call BlamerToggle()<CR>
+
 " Gives you a heads-up when you go over 81 chars per line
 call matchadd('ColorColumn', '\%81v', 100)
 highlight ColorColumn ctermbg=red
@@ -166,14 +199,18 @@ let g:mundo_prefer_python3 = 1
 " Automatically detect indent from filetype
 filetype indent plugin on
 
-" Set some language specific syntax options
+" " Set some language specific syntax options
+" autocmd Filetype ruby setlocal et ts=2 sw=2 sts=2
+" autocmd Filetype slim setlocal et ts=2 sw=2 sts=2
+" autocmd Filetype javascript setlocal et ts=2 sw=2 sts=2
+"
 autocmd Filetype yaml setlocal et ts=2 sw=2 sts=2
 autocmd Filetype haskell setlocal et ts=2 sw=2 sts=2
 autocmd Filetype crystal setlocal et ts=2 sw=2 sts=2
 autocmd Filetype markdown setlocal spell et ts=2 sw=2 sts=2
 
 " Markdown
-let g:markdown_fenced_languages = ['crystal', 'ruby', 'haskell', 'css', 'typescript', 'javascript', 'js=javascript', 'json=javascript'] 
+let g:markdown_fenced_languages = ['crystal', 'ruby', 'haskell', 'css', 'typescript', 'javascript', 'js=javascript', 'json=javascript']
 let g:markdown_syntax_conceal = 0
 
 " Better pane navigation
@@ -244,7 +281,7 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 
 " NERDTree
-nmap <silent> <Leader>ee :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>ee :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinPos="right"
 
@@ -312,6 +349,10 @@ set lazyredraw
 " Naughty chars
 set list
 set listchars=tab:>~,trail:~
+
+" Wrapping to previous line via backspace
+set backspace=indent,eol,start
+set whichwrap+=<,>,[,]
 
 " Indents
 set tabstop=8
