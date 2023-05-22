@@ -1,6 +1,7 @@
 nvim/.config/nvim/.netrwhist
 nvim/.config/nvim/plugs
 nvim/.config/nvim/undo
+/automatic_backups/
 zsh/.oh-my-zsh
 tmux/.tmux/plugins
 shards/.shards/lib
