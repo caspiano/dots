@@ -47,7 +47,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'APZelos/blamer.nvim'
 
 " GitHub
-" Plug 'github/copilot.vim'
+Plug 'github/copilot.vim'
 
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
@@ -124,6 +124,12 @@ else
 endif
 
 let g:deoplete#enable_at_startup = 1
+let g:copilot_filetypes = {
+    \ 'yaml': 1,
+    \ 'gitcommit': 1,
+    \ 'gitrebase': 1,
+    \ 'markdown': 1,
+    \ }
 
 call plug#end()
 
@@ -313,6 +319,11 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
+let g:filetype_defaults = {
+    \ 'yaml': 1,
+    \ 'markdown': 1,
+    \ }
+
 nmap <C-Bslash> :NERDComToggleComment<CR>
 vmap <C-Bslash> :NERDComToggleComment<CR>gv
 
@@ -328,7 +339,7 @@ set relativenumber
 set wildmenu
 
 " Shell trix to load env
-set shellcmdflag=-ic
+set shellcmdflag=-c
 
 " Search matching options
 set ignorecase
@@ -355,10 +366,11 @@ set backspace=indent,eol,start
 set whichwrap+=<,>,[,]
 
 " Indents
-set tabstop=8
 set softtabstop=0
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
 set expandtab
-set shiftwidth=4
 set smarttab
 set shiftround
 set autoindent
