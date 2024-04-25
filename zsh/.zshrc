@@ -51,7 +51,6 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/bgnotify          # Cross-platform notifications
   zgenom ohmyzsh plugins/brew
   zgenom ohmyzsh plugins/dircycle          # Numerically reference previous dirs
-  zgenom ohmyzsh plugins/docker
   zgenom ohmyzsh plugins/docker-compose
   zgenom ohmyzsh plugins/git
   zgenom ohmyzsh plugins/git-auto-fetch
@@ -115,8 +114,9 @@ setopt extendedglob
 
 # Locales
 
-# export TZ='Australia/Sydney'
-export TZ='Asia/Taipei'
+export TZ='Australia/Sydney'
+# export TZ='Asia/Taipei'
+# export TZ='Europe/Berlin'
 export LANG=en_AU.UTF-8
 export LC_MESSAGES=en_AU.UTF-8
 export LC_ALL=en_AU.UTF-8
@@ -294,7 +294,7 @@ then
   export LDFLAGS="-L/usr/local/opt/openssl/lib"
 
   # LLVM
-  export LLVM_CONFIG=/usr/local/opt/llvm/bin/llvm-config
+  export LLVM_CONFIG=/opt/homebrew/opt/llvm/bin/llvm-config
 
   # Stop brew updating every fucking time
   export HOMEBREW_NO_AUTO_UPDATE=1
@@ -397,25 +397,6 @@ if [ -f "$HOME/.openai_api_key" ]; then
     }
 fi
 
-# Manas
-
-function brium () {
-    # Combine all args into one string
-    message=""
-    for arg in "$@"; do
-        message="$message $arg"
-    done
-
-  curl -XPOST \
-       "https://brium.me/api/messages" \
-       -d "$message" \
-       -H "Authorization: Bearer $(cat "$HOME/.brium" | tr -d '[[:space:]]')"
-}
-
-alias b="brium"
-alias b\?="brium \?"
-alias bb="brium bye"
-
 # Environments
 ###############################################################################
 
@@ -429,3 +410,17 @@ alias bb="brium bye"
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
 # Python Poetry
 [ -f $POETRY_HOME/env ] && . $POETRY_HOME/env
+
+# docker completions
+[ -x "$(command -v docker)" ] && source <(docker completion zsh)
+
+# bun completions
+[ -s "/Users/caspian/.bun/_bun" ] && source "/Users/caspian/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
